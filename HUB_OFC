@@ -1,7 +1,7 @@
--- Load Orion Library
+--Load Orion Library
 local OrionLib = loadstring(game:HttpGet('https://raw.githubusercontent.com/hakaiofc/Base/main/HUBORION'))()
 
--- ANTI AFK
+--ANTI AFK
 pcall(function()
     local VirtualUser = game:service'VirtualUser'
     game:service'Players'.LocalPlayer.Idled:connect(function()
@@ -10,7 +10,7 @@ pcall(function()
     end)
 end)
 
--- GLOBALS
+--GLOBALS
 local LP = game.Players.LocalPlayer
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local character = LP.Character or LP.CharacterAdded:Wait()
@@ -47,13 +47,14 @@ function AutoPushUp()
     local args = {"GiveHealthCuzPro", 2, 1}
     local function executePushUp()
         while _G.AutoPushUp do
-            for i = 1, 1 do
+            for i = 1, 1.2 do
+                lutero:FireServer(unpack(args))
                 lutero:FireServer(unpack(args))
                 task.wait(0.000049)
             end
         end
     end
-    for i = 1, 3 do task.spawn(executePushUp) end
+    for i = 1, 1.2 do task.spawn(executePushUp) end
 end
 
 --Função AutoStamina
@@ -82,7 +83,7 @@ function AutoStamina()
     end
 end
 
--- Função AutoStamina2 aprimorada com controle via sliders
+--Função AutoStamina2 aprimorada com controle via sliders
 function AutoStamina2()
     local staminaEvent = ReplicatedStorage:FindFirstChild("AddStaminaEvent")
     if not staminaEvent then return end
@@ -253,7 +254,7 @@ function FarmAllTools()
     for _ = 1, 4 do task.spawn(execute) end
 end
 
--- Interface
+--Interface
 local Window = OrionLib:MakeWindow({
     Name = "BILLS_OFC HUB",
     HidePremium = false,
