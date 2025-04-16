@@ -15,7 +15,7 @@ local LP = game.Players.LocalPlayer
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local character = LP.Character or LP.CharacterAdded:Wait()
 
-_G.AutoDP = false
+_G.AutoPushUp = false
 _G.AutoStamina = false
 _G.AutoStamina2 = false
 _G.AutoStamina3 = false
@@ -25,7 +25,7 @@ _G.AutoDumbell = false
 _G.FarmClones = false
 _G.TurboAnims = false
 
--- TURBO ANIMAÇÕES
+--TURBO ANIMAÇÕES
 spawn(function()
     while true do
         if _G.TurboAnims then
@@ -40,13 +40,13 @@ spawn(function()
     end
 end)
 
--- Auto PushUp
+--Auto PushUp
 function AutoPushUp()
     local lutero = ReplicatedStorage:FindFirstChild("Lutero")
     if not lutero then return end
     local args = {"GiveHealthCuzPro", 2, 1}
     local function executePushUp()
-        while _G.AutoDP do
+        while _G.AutoPushUp do
             for i = 1, 1 do
                 lutero:FireServer(unpack(args))
                 task.wait(0.000049)
@@ -56,7 +56,7 @@ function AutoPushUp()
     for i = 1, 3 do task.spawn(executePushUp) end
 end
 
--- Função AutoStamina ()
+--Função AutoStamina
 function AutoStamina()
     local staminaEvent = ReplicatedStorage:FindFirstChild("AddStaminaEvent")
     if not staminaEvent then return end
@@ -82,30 +82,33 @@ function AutoStamina()
     end
 end
 
--- Função AutoStamina2 ()
+-- Função AutoStamina2 aprimorada com controle via sliders
 function AutoStamina2()
     local staminaEvent = ReplicatedStorage:FindFirstChild("AddStaminaEvent")
     if not staminaEvent then return end
-
+    local loops = 12  
+    local delayTime = 0.000049 
     local function executeStamina2()
         while _G.AutoStamina2 do
-            for i = 1, 12 do 
+            for i = 1, loops do
                 staminaEvent:FireServer()
                 staminaEvent:FireServer()
                 staminaEvent:FireServer()
-                staminaEvent:FireServer()
-                staminaEvent:FireServer()
-                task.wait(0.0049)
             end
+            task.wait(delayTime)
         end
     end
-
-    for i = 1, 14 do 
+    local function setConfig(newLoops, newDelay)
+        loops = newLoops or loops
+        delayTime = newDelay or delayTime
+    end
+    _G.setAutoStaminaConfig = setConfig
+    for i = 1, 14 do
         task.spawn(executeStamina2)
     end
 end
 
--- Função AutoStamina3 ()
+--Função AutoStamina3
 function AutoStamina3()
     local staminaEvent = ReplicatedStorage:FindFirstChild("AddStaminaEvent")
     if not staminaEvent then return end
@@ -131,7 +134,7 @@ function AutoStamina3()
     end
 end
 
--- Função AutoStamina4 ()
+--Função AutoStamina4
 function AutoStamina4()
     local staminaEvent = ReplicatedStorage:FindFirstChild("AddStaminaEvent")
     if not staminaEvent then return end
@@ -157,7 +160,7 @@ function AutoStamina4()
     end
 end
 
--- Função AutoStamina5 ()
+--Função AutoStamina5
 function AutoStamina5()
     local staminaEvent = ReplicatedStorage:FindFirstChild("AddStaminaEvent")
     if not staminaEvent then return end
@@ -182,7 +185,8 @@ function AutoStamina5()
         task.spawn(executeStamina5)
     end
 end
---function AutoDumbell
+
+--Função AutoDumbell
 function AutoDumbell()
     local Players = game:GetService("Players")
     local LP = Players.LocalPlayer
@@ -214,7 +218,7 @@ function AutoDumbell()
     end
 end
 
--- Clone Tool
+--Clone Tool
 function CloneTool()
     local tool = LP.Character:FindFirstChildOfClass("Tool") or LP.Backpack:FindFirstChildOfClass("Tool")
     if not tool then return end
@@ -226,14 +230,14 @@ function CloneTool()
     clone.Parent = LP.Backpack
 end
 
--- Equip All Tools
+--Equip All Tools
 function EquipAllTools()
     for _, tool in pairs(LP.Backpack:GetChildren()) do
         if tool:IsA("Tool") then tool.Parent = LP.Character end
     end
 end
 
--- Farm All Equipped Tools
+--Farm All Equipped Tools
 function FarmAllTools()
     local function execute()
         while _G.FarmClones do
@@ -265,7 +269,7 @@ local HubTab = Window:MakeTab({
 })
 
 HubTab:AddSection({ Name = "Auto-Farm" })
-HubTab:AddToggle({ Name = "Auto PushUp", Default = false, Callback = function(v) _G.AutoDP = v if v then AutoPushUp() end end })
+HubTab:AddToggle({ Name = "Auto PushUp", Default = false, Callback = function(v) _G.AutoPushUp = v if v then AutoPushUp() end end })
 HubTab:AddToggle({ Name = "Auto Stamina", Default = false, Callback = function(v) _G.AutoStamina = v if v then AutoStamina() end end })
 HubTab:AddToggle({ Name = "Auto Stamina2", Default = false, Callback = function(v) _G.AutoStamina2 = v if v then AutoStamina2() end end })
 HubTab:AddToggle({ Name = "Auto Dumbell", Default = false, Callback = function(v) _G.AutoDumbell = v if v then AutoDumbell() end end })
