@@ -39,7 +39,6 @@ spawn(function()
         task.wait(0.00001)
     end
 end)
-
 --Auto PushUp
 function AutoPushUp()
     local lutero = ReplicatedStorage:FindFirstChild("Lutero")
@@ -56,12 +55,10 @@ function AutoPushUp()
     end
     for i = 1, 1.2 do task.spawn(executePushUp) end
 end
-
 --Função AutoStamina
 function AutoStamina()
     local staminaEvent = ReplicatedStorage:FindFirstChild("AddStaminaEvent")
     if not staminaEvent then return end
-
     local function executeStamina()
         while _G.AutoStamina do
             for i = 1, 18 do 
@@ -77,12 +74,10 @@ function AutoStamina()
             end
         end
     end
-
     for i = 1, 19 do
         task.spawn(executeStamina)
     end
 end
-
 --Função AutoStamina2 aprimorada com controle via sliders
 function AutoStamina2()
     local staminaEvent = ReplicatedStorage:FindFirstChild("AddStaminaEvent")
@@ -108,12 +103,10 @@ function AutoStamina2()
         task.spawn(executeStamina2)
     end
 end
-
 --Função AutoStamina3
 function AutoStamina3()
     local staminaEvent = ReplicatedStorage:FindFirstChild("AddStaminaEvent")
     if not staminaEvent then return end
-
     local function executeStamina3()
         while _G.AutoStamina3 do
             for i = 1, 20 do 
@@ -134,12 +127,10 @@ function AutoStamina3()
         task.spawn(executeStamina3)
     end
 end
-
 --Função AutoStamina4
 function AutoStamina4()
     local staminaEvent = ReplicatedStorage:FindFirstChild("AddStaminaEvent")
     if not staminaEvent then return end
-
     local function executeStamina4()
         while _G.AutoStamina4 do
             for i = 1, 25 do 
@@ -155,17 +146,14 @@ function AutoStamina4()
             end
         end
     end
-
     for i = 1, 26 do
         task.spawn(executeStamina4)
     end
 end
-
 --Função AutoStamina5
 function AutoStamina5()
     local staminaEvent = ReplicatedStorage:FindFirstChild("AddStaminaEvent")
     if not staminaEvent then return end
-
     local function executeStamina5()
         while _G.AutoStamina5 do
             for i = 1, 67 do 
@@ -186,12 +174,10 @@ function AutoStamina5()
         task.spawn(executeStamina5)
     end
 end
-
 --Função AutoDumbell
 function AutoDumbell()
     local Players = game:GetService("Players")
     local LP = Players.LocalPlayer
-
     local function execute()
         while _G.AutoDumbell do
             local char = LP.Character
@@ -218,19 +204,24 @@ function AutoDumbell()
         task.spawn(execute)
     end
 end
-
---Clone Tool
 function CloneTool()
     local tool = LP.Character:FindFirstChildOfClass("Tool") or LP.Backpack:FindFirstChildOfClass("Tool")
     if not tool then return end
     local clone = tool:Clone()
+    if tool.Name == "Dumbell" then
+        local remoteEvent = tool:FindFirstChildWhichIsA("RemoteEvent")
+        if remoteEvent then
+            clone.Activated:Connect(function()
+                remoteEvent:FireServer()
+            end)
+        end
+    end
     for _, obj in ipairs(tool:GetDescendants()) do
         local new = obj:Clone()
         new.Parent = clone:FindFirstChild(obj.Parent.Name) or clone
     end
     clone.Parent = LP.Backpack
 end
-
 --Equip All Tools
 function EquipAllTools()
     for _, tool in pairs(LP.Backpack:GetChildren()) do
