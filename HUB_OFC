@@ -24,6 +24,8 @@ _G.AutoStamina5 = false
 _G.AutoDumbell = false
 _G.FarmClones = false
 _G.TurboAnims = false
+local AutoFarmBackpack = false
+local AutoFarmAllTools = false
 
 --TURBO ANIMAÇÕES
 spawn(function()
@@ -174,36 +176,36 @@ function AutoStamina5()
         task.spawn(executeStamina5)
     end
 end
---Função AutoDumbell
+-- Função AutoDumbell (versão otimizada)
 function AutoDumbell()
-    local Players = game:GetService("Players")
-    local LP = Players.LocalPlayer
-    local function execute()
+    local LP = game.Players.LocalPlayer
+    local Backpack = LP:WaitForChild("Backpack")
+    local Character = LP.Character or LP.CharacterAdded:Wait()
+
+    task.spawn(function()
         while _G.AutoDumbell do
-            local char = LP.Character
-            if char then
-                local dumbell = char:FindFirstChild("Dumbell")
-                if dumbell then
-                    local event = dumbell:FindFirstChildWhichIsA("RemoteEvent")
-                    if event then
-                        for a = 1, 1.2 do
-                            for b = 1, 1.2 do
-                                for c = 1, 1.2 do
-                                    event:FireServer()
-                                    event:FireServer()
-                                end
-                            end
-                        end
+            local dumbells = {}
+            for _, container in ipairs({Character, Backpack}) do
+                for _, tool in ipairs(container:GetChildren()) do
+                    if tool:IsA("Tool") and tool.Name == "Dumbell" then
+                        table.insert(dumbells, tool)
                     end
                 end
             end
-            task.wait()
+            for _, dumbell in ipairs(dumbells) do
+                local event = dumbell:FindFirstChildWhichIsA("RemoteEvent")
+                if event then
+                    for _ = 1, 1.3 do
+                        event:FireServer()
+                        event:FireServer()
+                    end
+                end
+            end
+            task.wait() 
         end
-    end
-    for _ = 1, 1.2 do
-        task.spawn(execute)
-    end
+    end)
 end
+--Função Clonetool
 function CloneTool()
     local tool = LP.Character:FindFirstChildOfClass("Tool") or LP.Backpack:FindFirstChildOfClass("Tool")
     if not tool then return end
@@ -211,6 +213,9 @@ function CloneTool()
     if tool.Name == "Dumbell" then
         local remoteEvent = tool:FindFirstChildWhichIsA("RemoteEvent")
         if remoteEvent then
+            tool.Activated:Connect(function()
+                remoteEvent:FireServer()
+            end)
             clone.Activated:Connect(function()
                 remoteEvent:FireServer()
             end)
@@ -234,22 +239,33 @@ function EquipAllTools()
     equipToolsInContainer(LP.Character)
     equipToolsInContainer(LP.Backpack)
 end
---Farm All Equipped Tools
+--Farm All Tools 
 function FarmAllTools()
     local function execute()
         while _G.FarmClones do
             for _, tool in pairs(LP.Character:GetChildren()) do
                 if tool:IsA("Tool") then
                     local event = tool:FindFirstChildWhichIsA("RemoteEvent")
-                    if event then event:FireServer() end
+                    if event then
+                        event:FireServer() 
+                    end
+                end
+            end
+            for _, tool in pairs(LP.Backpack:GetChildren()) do
+                if tool:IsA("Tool") then
+                    local event = tool:FindFirstChildWhichIsA("RemoteEvent")
+                    if event then
+                        event:FireServer() 
+                    end
                 end
             end
             task.wait(0.00005)
         end
     end
-    for _ = 1, 4 do task.spawn(execute) end
+    for _ = 1, 1.2 do
+        task.spawn(execute)
+    end
 end
-
 --Interface
 local Window = OrionLib:MakeWindow({
     Name = "BILLS_OFC HUB",
@@ -269,12 +285,172 @@ HubTab:AddSection({ Name = "Auto-Farm" })
 HubTab:AddToggle({ Name = "Auto PushUp", Default = false, Callback = function(v) _G.AutoPushUp = v if v then AutoPushUp() end end })
 HubTab:AddToggle({ Name = "Auto Stamina", Default = false, Callback = function(v) _G.AutoStamina = v if v then AutoStamina() end end })
 HubTab:AddToggle({ Name = "Auto Stamina2", Default = false, Callback = function(v) _G.AutoStamina2 = v if v then AutoStamina2() end end })
-HubTab:AddToggle({ Name = "Auto Dumbell", Default = false, Callback = function(v) _G.AutoDumbell = v if v then AutoDumbell() end end })
+HubTab:AddToggle({
+    Name = "Auto Dumbell",
+    Default = false,
+    Callback = function(v)
+        _G.AutoDumbell = v
+        if v then
+            AutoDumbell()  
+        end
+    end
+})
 HubTab:AddToggle({ Name = "Turbo Animações", Default = false, Callback = function(v) _G.TurboAnims = v end })
-HubTab:AddButton({ Name = "Clonar Tool Equipada", Callback = CloneTool })
-HubTab:AddButton({ Name = "Equipar Todas Tools", Callback = EquipAllTools })
-HubTab:AddToggle({ Name = "Farmar Todas Tools Equipadas", Default = false, Callback = function(v) _G.FarmClones = v if v then FarmAllTools() end end })
+local ToolTab = Window:MakeTab({
+    Name = "Funções Tool",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+})
 
+ToolTab:AddButton({ Name = "Clonar Tool Equipada", Callback = CloneTool })
+ToolTab:AddButton({ Name = "Equipar Todas Tools", Callback = EquipAllTools })
+ToolTab:AddToggle({
+    Name = "AutoFarm Tools Equipadas (Loop)",
+    Default = false,
+    Callback = function(value)
+        AutoFarmEquipped = value
+        task.spawn(function()
+            while AutoFarmEquipped do
+                local LP = game.Players.LocalPlayer
+                local char = LP.Character
+                if char then
+                    for _, tool in ipairs(char:GetChildren()) do
+                        if tool:IsA("Tool") then
+                            local remote = tool:FindFirstChildWhichIsA("RemoteEvent", true)
+                            if remote then
+                                for _ = 1, 1.2 do
+                                    remote:FireServer()
+                                    task.wait()
+                                end
+                            end
+                        end
+                    end
+                end
+                task.wait(0.00001) 
+            end
+        end)
+    end
+})
+ToolTab:AddToggle({
+    Name = "AutoFarm Tools do Backpack (Loop)",
+    Default = false,
+    Callback = function(value)
+        AutoFarmBackpack = value
+        task.spawn(function()
+            while AutoFarmBackpack do
+                local LP = game.Players.LocalPlayer
+                local backpack = LP:FindFirstChild("Backpack")
+                if backpack then
+                    for _, tool in ipairs(backpack:GetChildren()) do
+                        if tool:IsA("Tool") then
+                            local remote = tool:FindFirstChildWhichIsA("RemoteEvent", true)
+                            if remote then
+                                for _ = 1, 1.2 do
+                                    remote:FireServer()
+                                    task.wait()
+                                end
+                            end
+                        end
+                    end
+                end
+                task.wait(0.00001)
+            end
+        end)
+    end
+})
+ToolTab:AddToggle({
+    Name = "AutoFarm Todas Tools (Equipadas + Backpack)",
+    Default = false,
+    Callback = function(value)
+        AutoFarmAllTools = value
+        task.spawn(function()
+            while AutoFarmAllTools do
+                local function fireTools(container)
+                    for _, tool in ipairs(container:GetChildren()) do
+                        if tool:IsA("Tool") then
+                            local remote = tool:FindFirstChildWhichIsA("RemoteEvent")
+                            if remote then
+                                for i = 1, 1.2 do
+                                    remote:FireServer()
+                                    task.wait(0.00001)
+                                end
+                            end
+                        end
+                    end
+                end
+                fireTools(LP.Character)
+                fireTools(LP.Backpack)
+                task.wait(0.000015)
+            end
+        end)
+    end
+})
+ToolTab:AddToggle({
+    Name = "AutoFarm Todas Tools (Loop Turbo)",
+    Default = false,
+    Callback = function(Value)
+        AutoFarmAllTools = Value
+        task.spawn(function()
+            while AutoFarmAllTools do
+                local LP = game.Players.LocalPlayer
+                local function farmTools(container)
+                    for _, tool in ipairs(container:GetChildren()) do
+                        if tool:IsA("Tool") then
+                            local remote = tool:FindFirstChildWhichIsA("RemoteEvent")
+                            if remote then
+                                task.spawn(function()
+                                    for _ = 1, 1.2 do
+                                        remote:FireServer()
+                                        task.wait(0.00001)
+                                    end
+                                end)
+                            end
+                        end
+                    end
+                end
+                local character = LP.Character or LP.CharacterAdded:Wait()
+                local backpack = LP:FindFirstChild("Backpack")
+                if character then
+                    farmTools(character)
+                end
+                if backpack then
+                    farmTools(backpack)
+                end
+                task.wait(0.000015)  
+            end
+        end)
+    end
+})
+ToolTab:AddToggle({
+    Name = "AutoFarm Turbo Extremo (Sem Animação)",
+    Default = false,
+    Callback = function(Value)
+        AutoFarmAllTools = Value
+        task.spawn(function()
+            while AutoFarmAllTools do
+                local LP = game.Players.LocalPlayer
+                local function farmTools(container)
+                    for _, tool in ipairs(container:GetChildren()) do
+                        if tool:IsA("Tool") then
+                            local remote = tool:FindFirstChildWhichIsA("RemoteEvent", true)  
+                            if remote then
+                                for _ = 1, 1.2 do
+                                    remote:FireServer()  
+                                end
+                            end
+                        end
+                    end
+                end
+                local char = LP.Character
+                local backpack = LP:FindFirstChild("Backpack")
+
+                if char then farmTools(char) end
+                if backpack then farmTools(backpack) end
+                task.wait(0.000013)  
+            end
+        end)
+    end
+})
 local StaminasTab = Window:MakeTab({
     Name = "Staminas+",
     Icon = "rbxassetid://4483345998",
