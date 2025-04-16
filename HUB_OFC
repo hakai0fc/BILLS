@@ -222,13 +222,18 @@ function CloneTool()
     end
     clone.Parent = LP.Backpack
 end
---Equip All Tools
+--Equip All Tools 
 function EquipAllTools()
-    for _, tool in pairs(LP.Backpack:GetChildren()) do
-        if tool:IsA("Tool") then tool.Parent = LP.Character end
+    local function equipToolsInContainer(container)
+        for _, tool in ipairs(container:GetChildren()) do
+            if tool:IsA("Tool") and tool.Parent ~= LP.Character then
+                tool.Parent = LP.Character
+            end
+        end
     end
+    equipToolsInContainer(LP.Character)
+    equipToolsInContainer(LP.Backpack)
 end
-
 --Farm All Equipped Tools
 function FarmAllTools()
     local function execute()
