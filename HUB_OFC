@@ -176,23 +176,6 @@ function AutoStamina5()
         task.spawn(executeStamina5)
     end
 end
---Função que trava a stamina no máximo
-function AutoStaminaInfinita()
-    local player = game:GetService("Players").LocalPlayer
-    local leaderstats = player:WaitForChild("leaderstats")
-    local stamina = leaderstats:WaitForChild("Stamina")
-    local maxStamina = leaderstats:WaitForChild("MaxStamina")
-    stamina.Value = maxStamina.Value
-    if _G.StaminaInfinitaLoop then
-        _G.StaminaInfinitaLoop:Disconnect()
-    end
-    _G.StaminaInfinitaLoop = stamina:GetPropertyChangedSignal("Value"):Connect(function()
-        if not _G.AutoStaminaInfinita then return end
-        if stamina.Value < maxStamina.Value then
-            stamina.Value = maxStamina.Value
-        end
-    end)
-end
 -- Função AutoDumbell (versão otimizada)
 function AutoDumbell()
     local LP = game.Players.LocalPlayer
@@ -476,18 +459,6 @@ local StaminasTab = Window:MakeTab({
 StaminasTab:AddToggle({ Name = "Auto Stamina1", Default = false, Callback = function(v) _G.AutoStamina3 = v if v then AutoStamina3() end end })
 StaminasTab:AddToggle({ Name = "Auto Stamina2", Default = false, Callback = function(v) _G.AutoStamina4 = v if v then AutoStamina4() end end })
 StaminasTab:AddToggle({ Name = "Auto Stamina3", Default = false, Callback = function(v) _G.AutoStamina5 = v if v then AutoStamina5() end end })
-StaminasTab:AddToggle({
-    Name = "Auto Stamina Infinita",
-    Default = false,
-    Callback = function(v)
-        _G.AutoStaminaInfinita = v
-        if v then
-            AutoStaminaInfinita()
-        elseif _G.StaminaInfinitaLoop then
-            _G.StaminaInfinitaLoop:Disconnect()
-        end
-    end
-})
 local ExtrasTab = Window:MakeTab({
     Name = "FUNÇÕES A+",
     Icon = "rbxassetid://4483345998",
