@@ -205,10 +205,10 @@ function AutoDumbell()
         end
     end)
 end
---Função Dumbell2
-function Dumbell2()
+--Função AutoDumbell2
+function AutoDumbell2()
     task.spawn(function()
-        while _G.AutoDumbell do
+        while _G.AutoDumbell2 do
             local dumbell = LP.Character and LP.Character:FindFirstChild("Dumbell")
             if dumbell then
                 local dumbellEvent = dumbell:FindFirstChild("Event")
