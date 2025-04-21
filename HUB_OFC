@@ -22,6 +22,7 @@ _G.AutoStamina3 = false
 _G.AutoStamina4 = false
 _G.AutoStamina5 = false
 _G.AutoDumbell = false
+_G.AutoDumbell2 = false
 _G.FarmClones = false
 _G.TurboAnims = false
 local AutoFarmBackpack = false
@@ -204,6 +205,22 @@ function AutoDumbell()
         end
     end)
 end
+--Função Dumbell2
+function Dumbell2()
+    task.spawn(function()
+        while _G.AutoDumbell do
+            local dumbell = LP.Character and LP.Character:FindFirstChild("Dumbell")
+            if dumbell then
+                local dumbellEvent = dumbell:FindFirstChild("Event")
+                if dumbellEvent then
+                    dumbellEvent:FireServer()
+                    dumbellEvent:FireServer()
+                end
+            end
+            task.wait(0.00029888)
+        end
+    end)
+end
 --Função Clonetool
 function CloneTool()
     local tool = LP.Character:FindFirstChildOfClass("Tool") or LP.Backpack:FindFirstChildOfClass("Tool")
@@ -291,6 +308,16 @@ HubTab:AddToggle({
         _G.AutoDumbell = v
         if v then
             AutoDumbell()  
+        end
+    end
+})
+HubTab:AddToggle({
+    Name = "Auto Dumbell2",
+    Default = false,
+    Callback = function(v)
+        _G.AutoDumbell2 = v
+        if v then
+            AutoDumbell2()  
         end
     end
 })
