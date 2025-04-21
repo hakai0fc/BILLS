@@ -205,22 +205,26 @@ function AutoDumbell()
         end
     end)
 end
---Função AutoDumbell2
+-- Função AutoDumbell2 (com loop for _ = 1, 1.3 incluso)
 function AutoDumbell2()
+    local LP = game.Players.LocalPlayer
     task.spawn(function()
-        while _G.AutoDumbell2 do
+        while _G.AutoDumbell do
             local dumbell = LP.Character and LP.Character:FindFirstChild("Dumbell")
             if dumbell then
                 local dumbellEvent = dumbell:FindFirstChild("Event")
                 if dumbellEvent then
-                    dumbellEvent:FireServer()
-                    dumbellEvent:FireServer()
+                    for _ = 1, 1.3 do
+                        dumbellEvent:FireServer()
+                        dumbellEvent:FireServer()
+                    end
                 end
             end
             task.wait(0.00029888)
         end
     end)
 end
+
 --Função Clonetool
 function CloneTool()
     local tool = LP.Character:FindFirstChildOfClass("Tool") or LP.Backpack:FindFirstChildOfClass("Tool")
