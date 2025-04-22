@@ -405,6 +405,33 @@ local StaminasTab = Window:MakeTab({
 StaminasTab:AddToggle({ Name = "Auto Stamina1", Default = false, Callback = function(v) _G.AutoStamina3 = v if v then AutoStamina3() end end })
 StaminasTab:AddToggle({ Name = "Auto Stamina2", Default = false, Callback = function(v) _G.AutoStamina4 = v if v then AutoStamina4() end end })
 StaminasTab:AddToggle({ Name = "Auto Stamina3", Default = false, Callback = function(v) _G.AutoStamina5 = v if v then AutoStamina5() end end })
+--WinsTab
+local WinsTab = Window:MakeTab({
+    Name = "Wins👑",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+})
+--Variável controladora do toggle
+local AutoWin = false
+WinsTab:AddToggle({
+    Name = "Auto Wins👑",
+    Default = false,
+    Callback = function(state)
+        AutoWin = state
+        local Players = game:GetService("Players")
+        local player = Players.LocalPlayer
+        local targetPosition = Vector3.new(451, -35, 529)
+        task.spawn(function()
+            while AutoWin do
+                local char = player.Character
+                if char and char:FindFirstChild("HumanoidRootPart") then
+                    char.HumanoidRootPart.CFrame = CFrame.new(targetPosition)
+                end
+                task.wait(0.65)
+            end
+        end)
+    end
+})
 local ExtrasTab = Window:MakeTab({
     Name = "FUNÇÕES A+",
     Icon = "rbxassetid://4483345998",
