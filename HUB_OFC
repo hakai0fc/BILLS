@@ -345,35 +345,34 @@ ToolTab:AddToggle({
     end
 })
 ToolTab:AddToggle({
-    Name = "AutoFarm Tools (Equipadas + Backpack)",
+    Name = "Auto Use Tools (Toggle)",
     Default = false,
     Callback = function(value)
         AutoFarmAllTools = value
-        task.spawn(function()
-            while AutoFarmAllTools do
-                local function equipAndActivateTools(container)
-                    for _, tool in ipairs(container:GetChildren()) do
-                        if tool:IsA("Tool") then
-                            tool.Parent = LP.Character
-                            local ammount = 1
-                            local delay_ = 0.00001 
-                            task.spawn(function()
-                                for _ = 1, ammount do
-                                    tool:Activate() 
-                                    if delay_ then
-                                        task.wait(delay_) 
-                                    end
-                                end
-                                tool.Parent = LP.Backpack
-                            end)
+        local ammount = 9999999999 
+        local delay_ = 0.275       
+        if value then
+            local Backpack = LP:FindFirstChildOfClass("Backpack")
+            for _, tool in ipairs(Backpack:GetChildren()) do
+                if tool:IsA("Tool") then
+                    tool.Parent = LP.Character
+                    task.spawn(function()
+                        for i = 1, ammount do
+                            if not AutoFarmAllTools then break end
+                            tool:Activate()
+                            if delay_ then
+                                task.wait(delay_)
+                            else
+                                task.wait()
+                            end
                         end
-                    end
+                        if AutoFarmAllTools then
+                            tool.Parent = Backpack
+                        end
+                    end)
                 end
-                equipAndActivateTools(LP.Character)
-                equipAndActivateTools(LP.Backpack)
-                task.wait(0.000015)
             end
-        end)
+        end
     end
 })
 ToolTab:AddToggle({
