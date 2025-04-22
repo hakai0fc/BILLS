@@ -271,33 +271,6 @@ function EquipAllTools()
     equipToolsInContainer(LP.Character)
     equipToolsInContainer(LP.Backpack)
 end
---Farm All Tools 
-function FarmAllTools()
-    local function execute()
-        while _G.FarmClones do
-            for _, tool in pairs(LP.Character:GetChildren()) do
-                if tool:IsA("Tool") then
-                    local event = tool:FindFirstChildWhichIsA("RemoteEvent")
-                    if event then
-                        event:FireServer() 
-                    end
-                end
-            end
-            for _, tool in pairs(LP.Backpack:GetChildren()) do
-                if tool:IsA("Tool") then
-                    local event = tool:FindFirstChildWhichIsA("RemoteEvent")
-                    if event then
-                        event:FireServer() 
-                    end
-                end
-            end
-            task.wait(0.00005)
-        end
-    end
-    for _ = 1, 1.2 do
-        task.spawn(execute)
-    end
-end
 --Interface
 local Window = OrionLib:MakeWindow({
     Name = "BILLS_OFC HUB",
@@ -374,91 +347,33 @@ ToolTab:AddToggle({
     end
 })
 ToolTab:AddToggle({
-    Name = "AutoFarm Tools do Backpack (Loop)",
-    Default = false,
-    Callback = function(value)
-        AutoFarmBackpack = value
-        task.spawn(function()
-            while AutoFarmBackpack do
-                local LP = game.Players.LocalPlayer
-                local backpack = LP:FindFirstChild("Backpack")
-                if backpack then
-                    for _, tool in ipairs(backpack:GetChildren()) do
-                        if tool:IsA("Tool") then
-                            local remote = tool:FindFirstChildWhichIsA("RemoteEvent", true)
-                            if remote then
-                                for _ = 1, 1.2 do
-                                    remote:FireServer()
-                                    task.wait()
-                                end
-                            end
-                        end
-                    end
-                end
-                task.wait(0.00001)
-            end
-        end)
-    end
-})
-ToolTab:AddToggle({
-    Name = "AutoFarm Todas Tools (Equipadas + Backpack)",
+    Name = "AutoFarm Tools (Equipadas + Backpack)",
     Default = false,
     Callback = function(value)
         AutoFarmAllTools = value
         task.spawn(function()
             while AutoFarmAllTools do
-                local function fireTools(container)
+                local function equipAndActivateTools(container)
                     for _, tool in ipairs(container:GetChildren()) do
                         if tool:IsA("Tool") then
-                            local remote = tool:FindFirstChildWhichIsA("RemoteEvent")
-                            if remote then
-                                for i = 1, 1.2 do
-                                    remote:FireServer()
-                                    task.wait(0.00001)
-                                end
-                            end
-                        end
-                    end
-                end
-                fireTools(LP.Character)
-                fireTools(LP.Backpack)
-                task.wait(0.000015)
-            end
-        end)
-    end
-})
-ToolTab:AddToggle({
-    Name = "AutoFarm Todas Tools (Loop Turbo)",
-    Default = false,
-    Callback = function(Value)
-        AutoFarmAllTools = Value
-        task.spawn(function()
-            while AutoFarmAllTools do
-                local LP = game.Players.LocalPlayer
-                local function farmTools(container)
-                    for _, tool in ipairs(container:GetChildren()) do
-                        if tool:IsA("Tool") then
-                            local remote = tool:FindFirstChildWhichIsA("RemoteEvent")
-                            if remote then
-                                task.spawn(function()
-                                    for _ = 1, 1.2 do
-                                        remote:FireServer()
-                                        task.wait(0.00001)
+                            tool.Parent = LP.Character
+                            local ammount = 2
+                            local delay_ = 0.00001 
+                            task.spawn(function()
+                                for _ = 1, ammount do
+                                    tool:Activate() 
+                                    if delay_ then
+                                        task.wait(delay_) 
                                     end
-                                end)
-                            end
+                                end
+                                tool.Parent = LP.Backpack
+                            end)
                         end
                     end
                 end
-                local character = LP.Character or LP.CharacterAdded:Wait()
-                local backpack = LP:FindFirstChild("Backpack")
-                if character then
-                    farmTools(character)
-                end
-                if backpack then
-                    farmTools(backpack)
-                end
-                task.wait(0.000015)  
+                equipAndActivateTools(LP.Character)
+                equipAndActivateTools(LP.Backpack)
+                task.wait(0.000015)
             end
         end)
     end
