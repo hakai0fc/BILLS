@@ -1,6 +1,5 @@
 --Load Orion Library
 local OrionLib = loadstring(game:HttpGet('https://raw.githubusercontent.com/hakaiofc/Base/main/HUBORION'))()
-
 --ANTI AFK
 pcall(function()
     local VirtualUser = game:service'VirtualUser'
@@ -9,7 +8,6 @@ pcall(function()
         VirtualUser:ClickButton2(Vector2.new())
     end)
 end)
-
 --GLOBALS
 local LP = game.Players.LocalPlayer
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -123,7 +121,6 @@ function AutoStamina3()
             end
         end
     end
-
     for i = 1, 20 do
         task.spawn(executeStamina3)
     end
@@ -170,7 +167,6 @@ function AutoStamina5()
             end
         end
     end
-
     for i = 1, 88 do
         task.spawn(executeStamina5)
     end
@@ -216,7 +212,7 @@ function AutoDumbell()
         end
     end)
 end
--- Função AutoDumbell2 
+--Função AutoDumbell2 
 function AutoDumbell2()
     local LP = game.Players.LocalPlayer
     task.spawn(function()
@@ -277,13 +273,11 @@ local Window = OrionLib:MakeWindow({
     ConfigFolder = "OrionTest",
     IntroEnabled = false
 })
-
 local HubTab = Window:MakeTab({
     Name = "Menu Exclusivo",
     Icon = "rbxassetid://4483345998",
     PremiumOnly = false
 })
-
 HubTab:AddSection({ Name = "Auto-Farm" })
 HubTab:AddToggle({ Name = "Auto PushUp", Default = false, Callback = function(v) _G.AutoPushUp = v if v then AutoPushUp() end end })
 HubTab:AddToggle({ Name = "Auto Stamina", Default = false, Callback = function(v) _G.AutoStamina = v if v then AutoStamina() end end })
@@ -314,7 +308,6 @@ local ToolTab = Window:MakeTab({
     Icon = "rbxassetid://4483345998",
     PremiumOnly = false
 })
-
 ToolTab:AddButton({ Name = "Clonar Tool Equipada", Callback = CloneTool })
 ToolTab:AddButton({ Name = "Equipar Todas Tools", Callback = EquipAllTools })
 ToolTab:AddToggle({
@@ -409,7 +402,6 @@ local StaminasTab = Window:MakeTab({
     Icon = "rbxassetid://4483345998",
     PremiumOnly = false
 })
-
 StaminasTab:AddToggle({ Name = "Auto Stamina1", Default = false, Callback = function(v) _G.AutoStamina3 = v if v then AutoStamina3() end end })
 StaminasTab:AddToggle({ Name = "Auto Stamina2", Default = false, Callback = function(v) _G.AutoStamina4 = v if v then AutoStamina4() end end })
 StaminasTab:AddToggle({ Name = "Auto Stamina3", Default = false, Callback = function(v) _G.AutoStamina5 = v if v then AutoStamina5() end end })
@@ -418,7 +410,6 @@ local ExtrasTab = Window:MakeTab({
     Icon = "rbxassetid://4483345998",
     PremiumOnly = false
 })
-
 ExtrasTab:AddSection({ Name = "FUNÇÕES ADICIONAIS" })
 ExtrasTab:AddButton({ Name = "InfiniteYield", Callback = function() loadstring(game:HttpGet('https://raw.githubusercontent.com/hakaiofc/EdgeIYinfiniteyield/main/mastersource'))() end })
 ExtrasTab:AddButton({ Name = "OPSTAMINA-Farme ⚙️", Callback = function() loadstring(game:HttpGet('https://raw.githubusercontent.com/hakaiofc/STAMINA2/refs/heads/main/LUTERO'))() end })
