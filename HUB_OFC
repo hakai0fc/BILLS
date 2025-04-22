@@ -23,9 +23,7 @@ _G.AutoStamina4 = false
 _G.AutoStamina5 = false
 _G.AutoDumbell = false
 _G.AutoDumbell2 = false
-_G.FarmClones = false
 _G.TurboAnims = false
-local AutoFarmBackpack = false
 local AutoFarmAllTools = false
 
 --TURBO ANIMAÇÕES
@@ -357,7 +355,7 @@ ToolTab:AddToggle({
                     for _, tool in ipairs(container:GetChildren()) do
                         if tool:IsA("Tool") then
                             tool.Parent = LP.Character
-                            local ammount = 2
+                            local ammount = 1
                             local delay_ = 0.00001 
                             task.spawn(function()
                                 for _ = 1, ammount do
