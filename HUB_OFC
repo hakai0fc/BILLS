@@ -439,5 +439,6 @@ local ExtrasTab = Window:MakeTab({
 })
 ExtrasTab:AddSection({ Name = "FUNÇÕES ADICIONAIS" })
 ExtrasTab:AddButton({ Name = "InfiniteYield", Callback = function() loadstring(game:HttpGet('https://raw.githubusercontent.com/hakaiofc/EdgeIYinfiniteyield/main/mastersource'))() end })
+ExtrasTab:AddButton({ Name = "FarmHub", Callback = function() loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Acrylix-or-A-Cheat-for-Sans-Multiversal-Battles-2-4074"))() end })
 ExtrasTab:AddButton({ Name = "OPSTAMINA-Farme ⚙️", Callback = function() loadstring(game:HttpGet('https://raw.githubusercontent.com/hakaiofc/STAMINA2/refs/heads/main/LUTERO'))() end })
 ExtrasTab:AddButton({ Name = "STAMINA INSTANTANEA ⚙️", Callback = function() loadstring(game:HttpGet('https://raw.githubusercontent.com/hakaiofc/STAMINA3/refs/heads/main/LUTERO'))() end })
