@@ -450,14 +450,14 @@ StaminasTab:AddToggle({ Name = "Auto Stamina2", Default = false, Callback = func
 StaminasTab:AddToggle({ Name = "Auto Stamina3", Default = false, Callback = function(v) _G.AutoStamina5 = v if v then AutoStamina5() end end })
 --WinsTab
 local WinsTab = Window:MakeTab({
-    Name = "Wins👑",
+    Name = "Torneio",
     Icon = "rbxassetid://4483345998",
     PremiumOnly = false
 })
 --Variável controladora do toggle
 local AutoWin = false
 WinsTab:AddToggle({
-    Name = "Auto Wins👑",
+    Name = "Auto Torneio",
     Default = false,
     Callback = function(state)
         AutoWin = state
@@ -483,5 +483,5 @@ local ExtrasTab = Window:MakeTab({
 ExtrasTab:AddSection({ Name = "FUNÇÕES ADICIONAIS" })
 ExtrasTab:AddButton({ Name = "InfiniteYield", Callback = function() loadstring(game:HttpGet('https://raw.githubusercontent.com/hakaiofc/EdgeIYinfiniteyield/main/mastersource'))() end })
 ExtrasTab:AddButton({ Name = "FarmHub", Callback = function() loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Acrylix-or-A-Cheat-for-Sans-Multiversal-Battles-2-4074"))() end })
-ExtrasTab:AddButton({ Name = "OPSTAMINA-Farme ⚙️", Callback = function() loadstring(game:HttpGet('https://raw.githubusercontent.com/hakaiofc/STAMINA2/refs/heads/main/LUTERO'))() end })
-ExtrasTab:AddButton({ Name = "STAMINA INSTANTANEA ⚙️", Callback = function() loadstring(game:HttpGet('https://raw.githubusercontent.com/hakaiofc/STAMINA3/refs/heads/main/LUTERO'))() end })
+ExtrasTab:AddButton({ Name = "OPSTAMINA-Farme", Callback = function() loadstring(game:HttpGet('https://raw.githubusercontent.com/hakaiofc/STAMINA2/refs/heads/main/LUTERO'))() end })
+ExtrasTab:AddButton({ Name = "STAMINA INSTANTANEA", Callback = function() loadstring(game:HttpGet('https://raw.githubusercontent.com/hakaiofc/STAMINA3/refs/heads/main/LUTERO'))() end })
