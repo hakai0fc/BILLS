@@ -107,7 +107,7 @@ function AutoStamina3()
     if not staminaEvent then return end
     local function executeStamina3()
         while _G.AutoStamina3 do
-            for i = 1, 14 do 
+            for i = 1, 12 do 
                 staminaEvent:FireServer()
                 staminaEvent:FireServer()
                 staminaEvent:FireServer()
@@ -120,7 +120,7 @@ function AutoStamina3()
             end
         end
     end
-    for i = 1, 16 do
+    for i = 1, 14 do
         task.spawn(executeStamina3)
     end
 end
@@ -130,7 +130,7 @@ function AutoStamina4()
     if not staminaEvent then return end
     local function executeStamina4()
         while _G.AutoStamina4 do
-            for i = 1, 14 do 
+            for i = 1, 12 do 
                 staminaEvent:FireServer()
                 staminaEvent:FireServer()
                 staminaEvent:FireServer()
@@ -143,7 +143,7 @@ function AutoStamina4()
             end
         end
     end
-    for i = 1, 16 do
+    for i = 1, 14 do
         task.spawn(executeStamina4)
     end
 end
@@ -153,7 +153,7 @@ function AutoStamina5()
     if not staminaEvent then return end
     local function executeStamina5()
         while _G.AutoStamina5 do
-            for i = 1, 14 do 
+            for i = 1, 12 do 
                 staminaEvent:FireServer()
                 staminaEvent:FireServer()
                 staminaEvent:FireServer()
@@ -166,7 +166,7 @@ function AutoStamina5()
             end
         end
     end
-    for i = 1, 16 do
+    for i = 1, 14 do
         task.spawn(executeStamina5)
     end
 end
