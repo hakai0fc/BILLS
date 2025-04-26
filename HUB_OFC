@@ -23,7 +23,7 @@ _G.AutoDumbell = false
 _G.AutoDumbell2 = false
 _G.TurboAnims = false
 local AutoFarmAllTools = false
-
+local AutoFarmAllTools2 = false
 --TURBO ANIMAÇÕES
 spawn(function()
     while true do
@@ -342,7 +342,7 @@ ToolTab:AddToggle({
     Default = false,
     Callback = function(value)
         AutoFarmAllTools = value
-        local delay_ = 0.275  
+        local delay_ = 1 
         local activationsPerCycle = 1  
         if value then
             local Backpack = LP:FindFirstChildOfClass("Backpack")
@@ -363,6 +363,36 @@ ToolTab:AddToggle({
                         end
                     end)
                 end
+            end
+        end
+    end
+})
+ToolTab:AddToggle({
+    Name = "Auto Use Tool Específica",
+    Default = false,
+    Callback = function(value)
+        AutoFarmAllTools2 = value
+        local delay_ = 0.275
+        local activationsPerCycle = 2
+        local nomeDaToolDesejada = "Spam Tool Lite"
+        if value then
+            local Backpack = LP:FindFirstChildOfClass("Backpack")
+            local tool = Backpack:FindFirstChild(nomeDaToolDesejada)
+            if tool and tool:IsA("Tool") then
+                tool.Parent = LP.Character
+                task.spawn(function()
+                    while AutoFarmAllTools2 do
+                        for i = 1, activationsPerCycle do
+                            if not AutoFarmAllTools2 then break end
+                            tool:Activate()
+                            task.wait(delay_)
+                        end
+                        task.wait(0.00001)
+                    end
+                    if tool.Parent == LP.Character then
+                        tool.Parent = Backpack
+                    end
+                end)
             end
         end
     end
