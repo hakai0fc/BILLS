@@ -372,13 +372,12 @@ ToolTab:AddToggle({
     Default = false,
     Callback = function(value)
         AutoFarmAllTools2 = value
-        local delay_ = 0.285  
+        local delay_ = 0.275  
         local activationsPerCycle = 1
         local nomeDaToolDesejada = "Spam Tool Lite" 
         if value then
             local Backpack = LP:FindFirstChildOfClass("Backpack")
             local Character = LP.Character
-
             for _, tool in pairs(Backpack:GetChildren()) do
                 if tool:IsA("Tool") and tool.Name == nomeDaToolDesejada then
                     tool.Parent = Character
@@ -395,9 +394,9 @@ ToolTab:AddToggle({
                         end
                     end
                     if not toolsEquipped then
-                        task.wait(0.5)
+                        task.wait(0.4)
                     else
-                        task.wait(0.1)
+                        task.wait(0.00001)
                     end
                 end
             end)
@@ -412,7 +411,6 @@ ToolTab:AddToggle({
         end
     end
 })
-
 ToolTab:AddToggle({
     Name = "AutoFarm Turbo Extremo (Sem Animação)",
     Default = false,
