@@ -371,35 +371,48 @@ ToolTab:AddToggle({
     Name = "Auto Use Tool",
     Default = false,
     Callback = function(value)
-        AutoUseSpamTool = value
-        local delay_ = 0.270
+        AutoFarmAllTools2 = value
+        local delay_ = 0.285  
         local activationsPerCycle = 1
-        local nomeDaToolDesejada = "Spam Tool Lite"
+        local nomeDaToolDesejada = "Spam Tool Lite" 
         if value then
             local Backpack = LP:FindFirstChildOfClass("Backpack")
             local Character = LP.Character
-            local tool = Backpack:FindFirstChild(nomeDaToolDesejada) or Character:FindFirstChild(nomeDaToolDesejada)
-            if tool and tool:IsA("Tool") then
-                tool.Parent = Character
-                task.spawn(function()
-                    while AutoUseSpamTool do
-                        for i = 1, activationsPerCycle do
-                            if not AutoUseSpamTool then break end
+
+            for _, tool in pairs(Backpack:GetChildren()) do
+                if tool:IsA("Tool") and tool.Name == nomeDaToolDesejada then
+                    tool.Parent = Character
+                end
+         end
+            task.spawn(function()
+                while AutoFarmAllTools2 do
+                    local toolsEquipped = false
+                    for _, tool in pairs(Character:GetChildren()) do
+                        if tool:IsA("Tool") and tool.Name == nomeDaToolDesejada then
+                            toolsEquipped = true
                             tool:Activate()
                             task.wait(delay_)
                         end
-                        task.wait(0.00001)
                     end
-                    if tool.Parent == Character then
-                        tool.Parent = Backpack
+                    if not toolsEquipped then
+                        task.wait(0.5)
+                    else
+                        task.wait(0.1)
                     end
-                end)
-            else
-                print("Tool não encontrada: " .. nomeDaToolDesejada)
+                end
+            end)
+        else
+            local Backpack = LP:FindFirstChildOfClass("Backpack")
+            local Character = LP.Character
+            for _, tool in pairs(Character:GetChildren()) do
+                if tool:IsA("Tool") and tool.Name == nomeDaToolDesejada then
+                    tool.Parent = Backpack
+                end
             end
         end
     end
 })
+
 ToolTab:AddToggle({
     Name = "AutoFarm Turbo Extremo (Sem Animação)",
     Default = false,
