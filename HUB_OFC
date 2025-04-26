@@ -368,31 +368,34 @@ ToolTab:AddToggle({
     end
 })
 ToolTab:AddToggle({
-    Name = "Auto Use Tool Específica",
+    Name = "Auto Use Tool",
     Default = false,
     Callback = function(value)
-        AutoFarmAllTools2 = value
-        local delay_ = 0.275
-        local activationsPerCycle = 2
+        AutoUseSpamTool = value
+        local delay_ = 0.270
+        local activationsPerCycle = 1
         local nomeDaToolDesejada = "Spam Tool Lite"
         if value then
             local Backpack = LP:FindFirstChildOfClass("Backpack")
-            local tool = Backpack:FindFirstChild(nomeDaToolDesejada)
+            local Character = LP.Character
+            local tool = Backpack:FindFirstChild(nomeDaToolDesejada) or Character:FindFirstChild(nomeDaToolDesejada)
             if tool and tool:IsA("Tool") then
-                tool.Parent = LP.Character
+                tool.Parent = Character
                 task.spawn(function()
-                    while AutoFarmAllTools2 do
+                    while AutoUseSpamTool do
                         for i = 1, activationsPerCycle do
-                            if not AutoFarmAllTools2 then break end
+                            if not AutoUseSpamTool then break end
                             tool:Activate()
                             task.wait(delay_)
                         end
                         task.wait(0.00001)
                     end
-                    if tool.Parent == LP.Character then
+                    if tool.Parent == Character then
                         tool.Parent = Backpack
                     end
                 end)
+            else
+                print("Tool não encontrada: " .. nomeDaToolDesejada)
             end
         end
     end
