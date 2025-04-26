@@ -12,7 +12,6 @@ end)
 local LP = game.Players.LocalPlayer
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local character = LP.Character or LP.CharacterAdded:Wait()
-
 _G.AutoPushUp = false
 _G.AutoStamina = false
 _G.AutoStamina2 = false
@@ -108,7 +107,7 @@ function AutoStamina3()
     if not staminaEvent then return end
     local function executeStamina3()
         while _G.AutoStamina3 do
-            for i = 1, 20 do 
+            for i = 1, 14 do 
                 staminaEvent:FireServer()
                 staminaEvent:FireServer()
                 staminaEvent:FireServer()
@@ -121,7 +120,7 @@ function AutoStamina3()
             end
         end
     end
-    for i = 1, 20 do
+    for i = 1, 16 do
         task.spawn(executeStamina3)
     end
 end
@@ -131,7 +130,7 @@ function AutoStamina4()
     if not staminaEvent then return end
     local function executeStamina4()
         while _G.AutoStamina4 do
-            for i = 1, 25 do 
+            for i = 1, 14 do 
                 staminaEvent:FireServer()
                 staminaEvent:FireServer()
                 staminaEvent:FireServer()
@@ -144,7 +143,7 @@ function AutoStamina4()
             end
         end
     end
-    for i = 1, 26 do
+    for i = 1, 16 do
         task.spawn(executeStamina4)
     end
 end
@@ -154,7 +153,7 @@ function AutoStamina5()
     if not staminaEvent then return end
     local function executeStamina5()
         while _G.AutoStamina5 do
-            for i = 1, 67 do 
+            for i = 1, 14 do 
                 staminaEvent:FireServer()
                 staminaEvent:FireServer()
                 staminaEvent:FireServer()
@@ -167,7 +166,7 @@ function AutoStamina5()
             end
         end
     end
-    for i = 1, 88 do
+    for i = 1, 16 do
         task.spawn(executeStamina5)
     end
 end
@@ -189,7 +188,7 @@ function AutoDumbell()
             for _, dumbell in ipairs(dumbells) do
                 local event = dumbell:FindFirstChildWhichIsA("RemoteEvent")
                 if event then
-                    for i = 1, 2 do
+                    for i = 1, 1.2 do
                         event:FireServer()
                         event:FireServer()
                     end
@@ -200,7 +199,7 @@ function AutoDumbell()
                     for _, dumbell in ipairs(dumbells) do
                         local event = dumbell:FindFirstChildWhichIsA("RemoteEvent")
                         if event then
-                            for _ = 1, 2 do
+                            for _ = 1, 1.2 do
                                 event:FireServer()
                                 event:FireServer()
                             end
@@ -471,7 +470,7 @@ WinsTab:AddToggle({
                 if char and char:FindFirstChild("HumanoidRootPart") then
                     char.HumanoidRootPart.CFrame = CFrame.new(targetPosition)
                 end
-                task.wait(0.65)
+                task.wait(0.68)
             end
         end)
     end
