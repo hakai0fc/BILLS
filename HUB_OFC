@@ -341,9 +341,8 @@ ToolTab:AddToggle({
     Default = false,
     Callback = function(value)
         AutoFarmAllTools = value
-        local delay_ = 1 -- Tempo entre ativações
-        local activationsPerCycle = 1 -- Quantas vezes ativar cada ferramenta por ciclo
-
+        local delay_ = 1
+        local activationsPerCycle = 1
         if value then
             task.spawn(function()
                 local Backpack = LP:FindFirstChildOfClass("Backpack")
