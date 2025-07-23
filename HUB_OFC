@@ -481,7 +481,7 @@ local ExtrasTab = Window:MakeTab({
     PremiumOnly = false
 })
 ExtrasTab:AddSection({ Name = "FUNÇÕES ADICIONAIS" })
-ExtrasTab:AddButton({ Name = "InfiniteYield", Callback = function() loadstring(game:HttpGet('https://github.com/hakai0fc/EdgeIY/blob/main/infiniteyield'))() end })
+ExtrasTab:AddButton({ Name = "InfiniteYield", Callback = function() loadstring(game:HttpGet('https://raw.githubusercontent.com/hakai0fc/EdgeIY/refs/heads/main/infiniteyield'))() end })
 ExtrasTab:AddButton({ Name = "FarmHub", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/hakai0fc/HubFarm/refs/heads/main/CK"))() end })
 ExtrasTab:AddButton({ Name = "OPSTAMINA-Farme", Callback = function() loadstring(game:HttpGet('https://raw.githubusercontent.com/hakaiofc/STAMINA2/refs/heads/main/LUTERO'))() end })
 ExtrasTab:AddButton({ Name = "STAMINA INSTANTANEA", Callback = function() loadstring(game:HttpGet('https://raw.githubusercontent.com/hakaiofc/STAMINA3/refs/heads/main/LUTERO'))() end })
