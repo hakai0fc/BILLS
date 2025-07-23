@@ -341,26 +341,36 @@ ToolTab:AddToggle({
     Default = false,
     Callback = function(value)
         AutoFarmAllTools = value
-        local delay_ = 1 
-        local activationsPerCycle = 1  
+        local delay_ = 1 -- Tempo entre ativações
+        local activationsPerCycle = 1 -- Quantas vezes ativar cada ferramenta por ciclo
+
         if value then
-            local Backpack = LP:FindFirstChildOfClass("Backpack")
-            for _, tool in ipairs(Backpack:GetChildren()) do
-                if tool:IsA("Tool") then
-                    tool.Parent = LP.Character
-                    task.spawn(function()
-                        while AutoFarmAllTools do
-                            for i = 1, activationsPerCycle do
-                                if not AutoFarmAllTools then break end
-                                tool:Activate()  
-                                task.wait(delay_)  
+            task.spawn(function()
+                local Backpack = LP:FindFirstChildOfClass("Backpack")
+                for _, tool in ipairs(Backpack:GetChildren()) do
+                    if tool:IsA("Tool") then
+                        tool.Parent = LP.Character
+                        task.spawn(function()
+                            while AutoFarmAllTools do
+                                for i = 1, activationsPerCycle do
+                                    if not AutoFarmAllTools then break end
+                                    tool:Activate()
+                                    task.wait(delay_)
+                                end
+                                task.wait(0.00001)
                             end
-                            task.wait(0.00001) 
-                        end
-                        if tool.Parent == LP.Character then
-                            tool.Parent = Backpack
-                        end
-                    end)
+                            if tool and tool.Parent == LP.Character then
+                                tool.Parent = Backpack
+                            end
+                        end)
+                    end
+                end
+            end)
+        else
+            local Backpack = LP:FindFirstChildOfClass("Backpack")
+            for _, tool in ipairs(LP.Character:GetChildren()) do
+                if tool:IsA("Tool") then
+                    tool.Parent = Backpack
                 end
             end
         end
