@@ -68,7 +68,7 @@ function AutoStamina()
                 staminaEvent:FireServer()
                 staminaEvent:FireServer()
                 staminaEvent:FireServer()
-                task.wait(0.00049)
+                task.wait(0.00000049)
             end
         end
     end
@@ -116,7 +116,7 @@ function AutoStamina3()
                 staminaEvent:FireServer()
                 staminaEvent:FireServer()
                 staminaEvent:FireServer()
-                task.wait(0.003)
+                task.wait(0.0000000000003)
             end
         end
     end
@@ -139,7 +139,7 @@ function AutoStamina4()
                 staminaEvent:FireServer()
                 staminaEvent:FireServer()
                 staminaEvent:FireServer()
-                task.wait(0.003)
+                task.wait(0.00000000003)
             end
         end
     end
@@ -207,7 +207,7 @@ function AutoDumbell()
                     end
                 end)
             end
-            task.wait(0.000001)
+            task.wait(0.000000000000001)
         end
     end)
 end
@@ -226,7 +226,7 @@ function AutoDumbell2()
                     end
                 end
             end
-            task.wait(0.00029888)
+            task.wait(0.000000000000000000000029888)
         end
     end)
 end
@@ -331,7 +331,7 @@ ToolTab:AddToggle({
                         end
                     end
                 end
-                task.wait(0.00001) 
+                task.wait(0.000000000001) 
             end
         end)
     end
@@ -356,7 +356,7 @@ ToolTab:AddToggle({
                                     tool:Activate()
                                     task.wait(delay_)
                                 end
-                                task.wait(0.00001)
+                                task.wait(0.00000000000001)
                             end
                             if tool and tool.Parent == LP.Character then
                                 tool.Parent = Backpack
@@ -404,7 +404,7 @@ ToolTab:AddToggle({
                     if not toolsEquipped then
                         task.wait(0.4)
                     else
-                        task.wait(0.00001)
+                        task.wait(0.00000000000000000001)
                     end
                 end
             end)
@@ -444,7 +444,7 @@ ToolTab:AddToggle({
 
                 if char then farmTools(char) end
                 if backpack then farmTools(backpack) end
-                task.wait(0.000013)  
+                task.wait(0.000000013)  
             end
         end)
     end
