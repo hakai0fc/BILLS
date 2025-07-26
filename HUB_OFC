@@ -44,14 +44,14 @@ function AutoPushUp()
     local args = {"GiveHealthCuzPro", 2, 1}
     local function executePushUp()
         while _G.AutoPushUp do
-            for i = 1, 1.2 do
+            for i = 1, 2 do
                 lutero:FireServer(unpack(args))
                 lutero:FireServer(unpack(args))
                 task.wait(0.000049)
             end
         end
     end
-    for i = 1, 1.2 do task.spawn(executePushUp) end
+    for i = 1, 2 do task.spawn(executePushUp) end
 end
 --Função AutoStamina
 function AutoStamina()
