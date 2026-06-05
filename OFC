@@ -1,0 +1,138 @@
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/hakaiofc/Base/main/HUBORION')))()
+
+local Window = OrionLib:MakeWindow({
+    Name = "HaKai OFC", 
+    HidePremium = false, 
+    SaveConfig = true, 
+    ConfigFolder = "OrionTest", 
+    IntroEnabled = false
+})
+
+pcall(function()
+    local VirtualUser = game:GetService('VirtualUser')
+    game:GetService('Players').LocalPlayer.Idled:Connect(function()
+        VirtualUser:CaptureController()
+        VirtualUser:ClickButton2(Vector2.new())
+    end)
+end)
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local RunService = game:GetService("RunService")
+
+local RemotesFolder, DumbellRemote, BenchRemote, PushUpRemote, DoubleRegRemote
+local fireDumbell, fireDouble, fireBench, firePushUp
+
+local success, err = pcall(function()
+    RemotesFolder = ReplicatedStorage:WaitForChild("Remotes", 5)
+    if RemotesFolder then
+        DumbellRemote = RemotesFolder:WaitForChild("Dumbell", 3)
+        BenchRemote = RemotesFolder:WaitForChild("Bench", 3)
+        PushUpRemote = RemotesFolder:WaitForChild("PushUp", 3)
+        DoubleRegRemote = RemotesFolder:WaitForChild("DoubleReg", 3)
+
+        if DumbellRemote then fireDumbell = DumbellRemote.FireServer end
+        if DoubleRegRemote then fireDouble = DoubleRegRemote.FireServer end
+        if BenchRemote then fireBench = BenchRemote.FireServer end
+        if PushUpRemote then firePushUp = PushUpRemote.FireServer end
+    else
+        warn("Pasta 'Remotes' não foi encontrada a tempo!")
+    end
+end)
+
+_G.BILLS_OFC = false      
+_G.AutoBench = false     
+_G.AutoForça = false      
+
+local function AutoDumbell()
+    while _G.BILLS_OFC do 
+        task.wait()
+        if not _G.BILLS_OFC then return end
+        local A_1 = "Rep"
+        local A_2 = 3
+        if _G.BILLS_OFC and DumbellRemote then
+            DumbellRemote:FireServer(A_1, A_2)
+        end
+    end
+end
+
+local ENVIO_POR_FRAME = 3
+RunService.Heartbeat:Connect(function()
+    if not _G.AutoBench or not fireBench or not firePushUp then return end
+    pcall(function()
+        for i = 1, ENVIO_POR_FRAME do
+            fireBench(BenchRemote, true)
+            fireBench(BenchRemote, true)
+            fireBench(BenchRemote, true)
+            firePushUp(PushUpRemote, true)
+            fireBench(BenchRemote, true)
+            firePushUp(PushUpRemote, true)
+            firePushUp(PushUpRemote, true)
+        end
+    end)
+end)
+
+local INTERVALO_TEMPO = 0.01384
+local acumulador = 0
+local CLIQUES_DOUBLE = 3
+
+RunService.Heartbeat:Connect(function(deltaTime)
+    if not _G.AutoForça or not fireDouble or not fireDumbell then return end
+    acumulador = acumulador + deltaTime
+    if acumulador >= INTERVALO_TEMPO then
+        acumulador = acumulador - INTERVALO_TEMPO
+        for i = 1, CLIQUES_DOUBLE do
+            fireDouble(DoubleRegRemote)
+            fireDouble(DoubleRegRemote)
+            fireDouble(DoubleRegRemote)
+        end
+    end
+end)
+
+local FarmTab1 = Window:MakeTab({
+    Name = "FarmStrength",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+})
+
+local SectionForca = FarmTab1:AddSection({
+    Name = "AutoForça"
+})
+
+FarmTab1:AddToggle({
+    Name = "Auto-Dumbell",
+    Default = false,
+    Callback = function(Value)
+        _G.BILLS_OFC = Value
+        if Value then
+            task.spawn(AutoDumbell)
+        end
+    end
+})
+
+FarmTab1:AddToggle({
+    Name = "Farm Força",
+    Default = false,
+    Callback = function(Value)
+        _G.AutoForça = Value
+    end
+})
+
+local AutoTab = Window:MakeTab({
+    Name = "FarmHealth",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+})
+
+local SectionVida = AutoTab:AddSection({
+    Name = "Farm Bench"
+})
+
+AutoTab:AddToggle({
+    Name = "Auto-Bench",
+    Default = false,
+    Callback = function(Value)
+        _G.AutoBench = Value
+    end
+})
+
+OrionLib:Init()
