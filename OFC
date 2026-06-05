@@ -1,4 +1,4 @@
-local OrionLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/hakaiofc/Base/main/HUBORION"))()
+local OrionLib = loadstring(game:HttpGet('https://raw.githubusercontent.com/hakaiofc/Base/main/HUBORION'))()
 
 local Window = OrionLib:MakeWindow({
     Name = "HaKai OFC",
@@ -16,67 +16,82 @@ pcall(function()
     end)
 end)
 
-local RunService = game:GetService("RunService")
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local Remotes = ReplicatedStorage:WaitForChild("Remotes")
-local Dumbell = Remotes:WaitForChild("Dumbell")
-local BenchRemote = Remotes:WaitForChild("Bench")
-local PushUpRemote = Remotes:WaitForChild("PushUp")
-local DoubleReg = Remotes:WaitForChild("DoubleReg")
-
 _G.BILLS_OFC = false
+_G.AutoStr = false
 _G.AutoBench = false
-_G.AutoForça = false
-
-local ENVIO_POR_FRAME = 3
-local INTERVALO_TEMPO = 0.01384
-local acumulador = 0
 
 local function AutoDumbell()
-    while _G.BILLS_OFC do
-        pcall(function()
-            Dumbell:FireServer("Rep", 3)
-        end)
-        task.wait() 
+    while _G.BILLS_OFC do 
+        task.wait()
+        if _G.BILLS_OFC == false then return end
+        
+        local A_1 = "Rep"
+        local A_2 = 3
+        
+        if _G.BILLS_OFC == true then
+            pcall(function()
+                game:GetService("ReplicatedStorage").Remotes.Dumbell:FireServer(A_1, A_2)
+            end)
+        end
     end
 end
 
-RunService.Heartbeat:Connect(function()
-    if _G.AutoBench then
-        pcall(function()
-            for i = 1, ENVIO_POR_FRAME do
-                BenchRemote:FireServer(true)
-                BenchRemote:FireServer(true)
-                BenchRemote:FireServer(true)
-                PushUpRemote:FireServer(true)
-                BenchRemote:FireServer(true)
-                PushUpRemote:FireServer(true)
-                PushUpRemote:FireServer(true)
-            end
-        end)
-    end
-end)
+local RunService = game:GetService("RunService")
+local Heartbeat = RunService.Heartbeat
+local INTERVALO_TEMPO_HB = 0.01384
+local acumulador = 0
 
-RunService.Heartbeat:Connect(function(deltaTime)
-    if _G.AutoForça then
+Heartbeat:Connect(function(deltaTime)
+    if _G.AutoStr then
         acumulador = acumulador + deltaTime
-        if acumulador >= INTERVALO_TEMPO then
-            acumulador = acumulador - INTERVALO_TEMPO
-            
+        if acumulador >= INTERVALO_TEMPO_HB then
+            acumulador = acumulador - INTERVALO_TEMPO_HB
             pcall(function()
-                for i = 1, 3 do
-                    DoubleReg:FireServer()
-                    DoubleReg:FireServer()
-                    DoubleReg:FireServer()
+                local Remotes = game:GetService("ReplicatedStorage"):FindFirstChild("Remotes")
+                if Remotes then
+                    local DoubleReg = Remotes:FindFirstChild("DoubleReg")
+                    local Dumbell = Remotes:FindFirstChild("Dumbell")
+                    if DoubleReg and Dumbell then
+                        for i = 1, 3 do
+                            DoubleReg:FireServer()
+                            DoubleReg:FireServer()
+                            DoubleReg:FireServer()
+                        end
+                        Dumbell:FireServer("Rep", 3)
+                    end
                 end
-                Dumbell:FireServer("Rep", 3)
             end)
         end
     end
 end)
 
+local ENVIO_POR_FRAME = 3
+
+Heartbeat:Connect(function()
+    if _G.AutoBench then
+        pcall(function()
+            local Remotes = game:GetService("ReplicatedStorage"):FindFirstChild("Remotes")
+            if Remotes then
+                local BenchRemote = Remotes:FindFirstChild("Bench")
+                local PushUpRemote = Remotes:FindFirstChild("PushUp")
+                if BenchRemote and PushUpRemote then
+                    for i = 1, ENVIO_POR_FRAME do
+                        BenchRemote:FireServer(true)
+                        BenchRemote:FireServer(true)
+                        BenchRemote:FireServer(true)
+                        PushUpRemote:FireServer(true)
+                        BenchRemote:FireServer(true)
+                        PushUpRemote:FireServer(true)
+                        PushUpRemote:FireServer(true)
+                    end
+                end
+            end
+        end)
+    end
+end)
+
 local FarmTab = Window:MakeTab({
-    Name = "FarmStrength",
+    Name = "Auto Farm",
     Icon = "rbxassetid://4483345998",
     PremiumOnly = false
 })
@@ -86,17 +101,17 @@ FarmTab:AddToggle({
     Default = false,
     Callback = function(v)
         _G.BILLS_OFC = v
-        if v then 
-            task.spawn(AutoDumbell) 
+        if v then
+            task.spawn(AutoDumbell)
         end
     end
 })
 
 FarmTab:AddToggle({
-    Name = "Farm Força",
+    Name = "Auto Força",
     Default = false,
     Callback = function(v)
-        _G.AutoForça = v
+        _G.AutoStr = v
     end
 })
 
@@ -105,6 +120,20 @@ FarmTab:AddToggle({
     Default = false,
     Callback = function(v)
         _G.AutoBench = v
+    end
+})
+local InfiniteYieldTab = Window:MakeTab({
+    Name = "FUNÇÕES A+",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+})
+
+InfiniteYieldTab:AddSection({ Name = "FUNÇÕES ADICIONAIS" })
+
+InfiniteYieldTab:AddButton({
+    Name = "Anti-Lag",
+    Callback = function()
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/hakai0fc/ANTILAG/refs/heads/main/HAKAI2'))()
     end
 })
 
